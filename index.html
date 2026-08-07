@@ -14,6 +14,7 @@
     --faint: #7c8079; --accent: #3f5f68; --accent-2: #263b36; --accent-soft: #dfe4e0;
     --line: #d9d4c6; --fill: #e6dfcd; --fill-edge: #a28d76;
     --sg1:#3f5f68; --sg2:#667c73; --sg3:#8a6a62; --sg4:#75647a; --sg5:#a28d76;
+    --nav-h: 60px;
     --sans: "Avenir Next","Avenir",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   }
   @media (prefers-color-scheme: dark) {
@@ -26,37 +27,62 @@
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: var(--paper); color: var(--ink);
-    font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); }
   .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px; }
 
-  /* hero */
-  header.hero { position: relative; overflow: hidden; border-bottom: 3px solid var(--accent-2); background: var(--card); }
+  /* ---------- sticky nav ---------- */
+  nav.top {
+    position: sticky; top: 0; z-index: 50; height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    background: color-mix(in srgb, var(--card) 80%, transparent);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .brand { font-weight: 700; font-size: 16px; color: var(--ink); text-decoration: none; letter-spacing: .01em; }
+  nav.top .links { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
+  nav.top .links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 7px 11px; border-radius: 6px; white-space: nowrap; transition: .15s; }
+  nav.top .links a:hover { color: var(--accent); background: var(--accent-soft); }
+  nav.top .links a.active { color: var(--accent); }
+  nav.top .links a.nav-cta { border: 1.5px solid var(--accent); color: var(--accent); }
+  nav.top .links a.nav-cta:hover { background: var(--accent); color: var(--paper); }
+  @media (max-width: 620px) {
+    nav.top .brand { display: none; }
+    nav.top { justify-content: center; }
+    nav.top .links a { padding: 7px 8px; font-size: 13px; }
+  }
+
+  /* ---------- hero (full screen) ---------- */
+  header.hero {
+    position: relative; overflow: hidden; background: var(--card);
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; align-items: center;
+    border-bottom: 3px solid var(--accent-2);
+  }
   .hero .contours { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent-2); opacity: .45; pointer-events: none; z-index: 0; }
   .hero::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-    background: linear-gradient(100deg, var(--card) 0%, var(--card) 10%, transparent 52%),
-                linear-gradient(0deg, var(--card) 0%, var(--card) 4%, transparent 30%); opacity:.82; }
-  .hero-inner { position: relative; z-index: 1; padding: 66px 0 52px; }
-  h1 { font-size: clamp(38px, 7vw, 60px); font-weight: 700; margin: 0; letter-spacing: .01em; line-height: 1.02; }
-  .role { font-size: clamp(15px, 2.4vw, 19px); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 8px 0 0; }
-  .tagline { max-width: 620px; font-size: 17px; margin: 18px 0 0; color: var(--ink); font-weight: 600; }
-  .cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+    background: linear-gradient(100deg, var(--card) 0%, var(--card) 8%, transparent 54%),
+                linear-gradient(0deg, var(--card) 0%, var(--card) 3%, transparent 26%); opacity:.8; }
+  .hero-inner { position: relative; z-index: 1; width: 100%; padding: 40px 0; }
+  h1 { font-size: clamp(40px, 8vw, 68px); font-weight: 700; margin: 0; letter-spacing: .01em; line-height: 1.02; }
+  .role { font-size: clamp(15px, 2.4vw, 20px); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 10px 0 0; }
+  .tagline { max-width: 640px; font-size: clamp(16px, 2.2vw, 18px); margin: 20px 0 0; color: var(--ink); font-weight: 600; }
+  .cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
   .btn { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; text-decoration: none;
     padding: 9px 16px; border-radius: 6px; border: 1.5px solid var(--accent); color: var(--accent); background: transparent; transition: .15s; }
   .btn:hover { background: var(--accent); color: var(--paper); }
   .btn.solid { background: var(--accent); color: var(--paper); }
   .btn.solid:hover { filter: brightness(1.08); }
+  .scrolldown { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1;
+    color: var(--muted); text-decoration: none; font-size: 24px; opacity: .8; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{ transform: translate(-50%, 0);} 50%{ transform: translate(-50%, 6px);} }
 
-  /* sections */
-  section { padding: 52px 0; border-top: 1px solid var(--line); }
-  section:first-of-type { border-top: none; }
-  h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0 0 22px; }
+  /* ---------- sections ---------- */
+  section { padding: 68px 0; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--nav-h) + 8px); }
+  h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0 0 24px; }
   .about p { font-size: 17px; max-width: 720px; margin: 0 0 14px; }
 
-  /* projects */
   .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 22px 20px; display: flex; flex-direction: column; }
   .card h3 { font-size: 18px; margin: 0 0 4px; color: var(--ink); }
@@ -69,10 +95,9 @@
   .plinks a:hover { text-decoration: underline; }
   .muted-link { color: var(--faint); font-weight: 600; font-size: 13.5px; }
 
-  /* skills */
   .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
   .skillgroup h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; font-weight: 700; }
-  .skillgroup h4::before { content:""; display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:7px; background: var(--sgc, var(--accent)); }
+  .skillgroup h4::before { content:""; display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:7px; background: var(--accent); }
   .skillgroup:nth-of-type(1) h4::before { background: var(--sg1); }
   .skillgroup:nth-of-type(2) h4::before { background: var(--sg2); }
   .skillgroup:nth-of-type(3) h4::before { background: var(--sg3); }
@@ -82,17 +107,30 @@
   .tag { font-size: 12.5px; padding: 3px 9px; border: 1px solid var(--line); border-radius: 4px; background: var(--card); color: var(--ink); }
   .tag.key { border-color: color-mix(in srgb, var(--accent) 55%, transparent); font-weight: 500; }
 
-  /* footer */
-  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; text-align: center; }
-  footer .fcta { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  /* ---------- contact ---------- */
+  #contact p.lead { font-size: 17px; max-width: 640px; margin: 0 0 22px; }
+  .contact-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 44px; text-align: center; }
   footer .copy { font-size: 12.5px; color: var(--faint); }
 
-  @media (max-width: 640px) { .projects { grid-template-columns: 1fr; } .hero-inner { padding: 46px 0 38px; } }
+  @media (max-width: 640px) { .projects { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<nav class="top">
+  <a class="brand" href="#home">Tenju Cuddihy</a>
+  <div class="links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+    <a class="nav-cta" href="./TenjuCuddihy_Resume_2026.pdf">Résumé</a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
   <svg class="contours" viewBox="0 0 580 611" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round">
   <g stroke-width="0.38" stroke-opacity="0.8">
     <path d="M35.2,120.9L34.6,121.4L33.9,123.4L34.0,125.5L34.3,127.5L34.5,129.6L34.6,131.7L34.6,133.7L34.3,135.8L33.8,137.8L33.2,139.2L32.9,139.9L31.4,141.9L31.2,142.1L29.3,144.0L29.3,144.0L27.7,146.1L27.3,147.2L27.1,148.1L27.1,150.2L27.3,151.5L27.5,152.2L28.8,154.3L29.3,154.7L31.2,155.7L32.5,156.4L33.2,156.7L35.2,158.1L35.5,158.4L36.6,160.5L36.5,162.5L36.0,164.6L36.0,166.6L36.6,168.7L37.1,169.8L37.5,170.8L37.9,172.8L37.8,174.9L37.4,176.9L37.1,178.8L37.1,179.0L37.1,179.1L37.6,181.0L39.1,182.8L39.4,183.1L41.0,184.1L42.8,185.2L43.0,185.2L44.9,186.3L46.3,187.2L46.9,187.6L48.8,189.2L48.8,189.3L50.4,191.3L50.8,192.0L51.6,193.4L52.7,195.4L52.7,195.4L54.7,197.5L54.7,197.5L56.6,198.6L58.3,199.6L58.6,199.7L60.5,200.9L61.4,201.6L62.5,202.7L63.4,203.7L64.4,204.9L65.3,205.7L66.4,206.9L67.4,207.8L68.4,208.9L69.1,209.8L70.3,211.7L70.4,211.9L71.6,214.0L72.3,215.0L72.8,216.0L73.9,218.1L74.2,218.7L74.9,220.1L75.7,222.2L76.2,223.5L76.5,224.2L77.5,226.3L78.1,227.5L78.8,228.4L80.1,230.0L82.0,230.3L84.0,229.0L84.5,228.4L85.9,226.3L85.9,226.2L86.5,224.2L87.3,222.2L87.9,221.4L89.4,220.1L89.8,219.8L91.8,219.2L93.7,219.1L95.7,219.2L97.6,219.5L99.6,220.0L100.1,220.1L101.5,220.5L103.5,221.2L105.5,222.0L106.0,222.2L107.4,222.5L109.4,222.9L111.3,223.0L113.3,223.0L115.2,222.9L117.2,222.7L119.1,222.6L121.1,222.5L123.0,222.6L125.0,222.9L126.9,223.5L128.5,224.2L128.9,224.4L130.8,225.0L132.8,225.2L134.7,224.9L136.7,224.3L136.9,224.2L138.7,222.8L139.5,222.2L140.1,220.1L139.2,218.1L138.7,217.4L137.6,216.0L136.7,215.0L136.0,214.0L134.8,211.9L134.7,211.8L133.6,209.8L132.8,208.3L132.5,207.8L131.5,205.7L130.8,204.6L130.3,203.7L128.9,201.6L128.9,201.6L126.9,200.0L126.3,199.6L125.0,199.0L123.0,198.5L121.1,198.2L119.1,198.0L117.2,197.5L117.1,197.5L115.2,196.8L113.6,195.4L113.3,195.1L112.0,193.4L111.3,191.4L111.3,191.3L111.3,189.3L111.3,189.1L111.8,187.2L112.5,185.2L112.7,183.1L112.0,181.0L111.3,179.9L110.4,179.0L109.4,178.0L107.4,176.9L107.4,176.9L105.5,176.7L103.5,176.9L103.4,176.9L101.5,177.5L99.6,177.9L97.6,178.1L95.7,178.0L93.7,177.8L91.8,177.6L89.8,177.4L87.9,177.3L85.9,177.1L85.0,176.9L84.0,176.7L82.0,176.2L80.1,175.8L78.1,175.7L76.2,175.8L74.2,175.6L72.3,174.9L72.1,174.9L70.3,173.2L69.8,172.8L68.4,172.0L66.4,171.5L64.4,171.2L62.5,170.8L62.4,170.8L60.5,170.2L58.6,169.5L57.5,168.7L56.6,167.9L55.7,166.6L55.0,164.6L54.9,162.5L55.7,160.5L56.6,159.5L58.5,158.4L58.6,158.3L60.5,157.7L62.5,157.0L63.5,156.4L64.4,154.7L64.6,154.3L66.0,152.2L66.4,151.8L68.4,150.3L68.5,150.2L69.6,148.1L69.0,146.1L68.4,145.3L66.4,144.4L64.4,145.2L63.3,146.1L62.5,146.7L60.5,147.5L58.6,147.9L56.7,148.1L56.6,148.1L54.7,148.3L52.7,148.6L50.8,148.8L48.8,148.8L46.9,148.3L46.6,148.1L44.9,146.9L44.3,146.1L43.1,144.0L43.0,143.7L42.3,141.9L41.9,139.9L41.5,137.8L41.2,135.8L41.0,134.8L40.7,133.7L40.3,131.7L40.3,129.6L40.8,127.5L41.0,127.2L41.7,125.5L42.7,123.4L43.0,122.1L43.1,121.4L43.0,121.1L41.0,119.6L39.1,119.5L37.1,120.0L35.2,120.9"/>
@@ -623,25 +661,23 @@
     <p class="role">Geospatial Data Scientist</p>
     <p class="tagline">I build production data pipelines and spatial analyses for ecological and environmental research, turning large, multi-source geospatial datasets into decision-ready results.</p>
     <div class="cta">
-      <a class="btn solid" href="./TenjuCuddihy_Resume_2026.pdf">Download résumé (PDF)</a>
-      <a class="btn" href="mailto:tenjucuddihy@gmail.com">Email</a>
-      <a class="btn" href="https://www.linkedin.com/in/tenju-cuddihy/" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/tenju-c" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn solid" href="#projects">View projects</a>
+      <a class="btn" href="./TenjuCuddihy_Resume_2026.pdf">Download résumé (PDF)</a>
     </div>
   </div>
+  <a class="scrolldown" href="#about" aria-label="Scroll to About">&#8595;</a>
 </header>
 
 <main>
-  <section class="about wrap">
+  <section class="about wrap" id="about">
     <h2>About</h2>
     <p>Geospatial data scientist working with large, multi-source forest and environmental datasets. First author of a forthcoming FEMC regional report comparing regeneration and overstory composition across more than 10,000 monitoring plots in the Northeastern U.S., built on R pipelines I wrote to standardize and analyze the underlying inventory data.</p>
     <p>I also build automated Python geoprocessing workflows, and since 2023 have worked remotely and largely independently, turning inventory and remote-sensing records into analysis-ready results for foresters, land managers, and researchers.</p>
   </section>
 
-  <section class="wrap">
+  <section class="wrap" id="projects">
     <h2>Selected Projects</h2>
     <div class="projects">
-
       <div class="card">
         <h3>Northeastern Forest Regeneration</h3>
         <p class="yr">FEMC · Forthcoming 2026 · First author</p>
@@ -649,7 +685,6 @@
         <div class="ptags"><span class="ptag">R</span><span class="ptag">spatial statistics</span><span class="ptag">FIA / FHM / NEFIN</span><span class="ptag">data harmonization</span></div>
         <div class="plinks"><span class="muted-link">Report forthcoming this year</span></div>
       </div>
-
       <div class="card">
         <h3>Distance-to-Infrastructure Rasters</h3>
         <p class="yr">FEMC · 2024–present</p>
@@ -657,7 +692,6 @@
         <div class="ptags"><span class="ptag">Python</span><span class="ptag">geopandas</span><span class="ptag">rasterio</span><span class="ptag">GDAL</span><span class="ptag">SciPy</span></div>
         <div class="plinks"><span class="muted-link">FEMC internal project</span></div>
       </div>
-
       <div class="card">
         <h3>High-Resolution Land Cover &amp; Tree Canopy</h3>
         <p class="yr">UVM Spatial Analysis Lab · 2023–2025</p>
@@ -665,7 +699,6 @@
         <div class="ptags"><span class="ptag">ArcGIS Pro</span><span class="ptag">LiDAR (QTM)</span><span class="ptag">land cover</span><span class="ptag">remote sensing</span></div>
         <div class="plinks"><span class="muted-link">Client / lab deliverables</span></div>
       </div>
-
       <div class="card">
         <h3>Dissolved Oxygen &amp; Phosphorus Cycling</h3>
         <p class="yr">UVM Honors Thesis · 2023</p>
@@ -676,11 +709,10 @@
           <a href="https://github.com/tenju-c/thesis_work" target="_blank" rel="noopener">Code →</a>
         </div>
       </div>
-
     </div>
   </section>
 
-  <section class="wrap">
+  <section class="wrap" id="skills">
     <h2>Skills</h2>
     <div class="skills">
       <div class="skillgroup"><h4>Languages &amp; Data</h4><div class="tags"><span class="tag key">R</span><span class="tag key">Python</span><span class="tag">geopandas</span><span class="tag">rasterio</span><span class="tag">GDAL</span><span class="tag">SciPy</span><span class="tag">SQL / SQLite</span></div></div>
@@ -690,19 +722,43 @@
       <div class="skillgroup"><h4>Tools</h4><div class="tags"><span class="tag">Adobe Suite</span><span class="tag">Microsoft Office</span><span class="tag">Google Workspace</span></div></div>
     </div>
   </section>
-</main>
 
-<footer>
-  <div class="wrap">
-    <div class="fcta">
-      <a class="btn" href="mailto:tenjucuddihy@gmail.com">Email</a>
+  <section class="wrap" id="contact">
+    <h2>Contact</h2>
+    <p class="lead">Open to remote geospatial and data-science roles. The fastest way to reach me is email, or connect on LinkedIn.</p>
+    <div class="contact-cta">
+      <a class="btn solid" href="mailto:tenjucuddihy@gmail.com">Email</a>
       <a class="btn" href="https://www.linkedin.com/in/tenju-cuddihy/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/tenju-c" target="_blank" rel="noopener">GitHub</a>
       <a class="btn" href="./TenjuCuddihy_Resume_2026.pdf">Résumé</a>
     </div>
-    <p class="copy">© 2026 Tenju Cuddihy · Brooklyn, NY · Open to remote</p>
-  </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><p class="copy">© 2026 Tenju Cuddihy · Brooklyn, NY · Open to remote</p></div>
 </footer>
+
+<script>
+  // Highlight the nav link for the section currently in view
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.top .links a[href^="#"]'));
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var ids = Object.keys(map);
+    var sections = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || !sections.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (a) { a.classList.remove('active'); });
+          if (map[e.target.id]) map[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { io.observe(s); });
+  })();
+</script>
 
 </body>
 </html>
