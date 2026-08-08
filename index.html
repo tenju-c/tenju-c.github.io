@@ -56,6 +56,11 @@
   /* ---------- fixed topo background (stays put on scroll) ---------- */
   .topo-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
   .topo-bg .contours { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent-2); opacity: .45; }
+  .topo-bg .peaks { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--ink); opacity: .9; }
+  .topo-bg .peaks text { font-family: var(--sans); font-size: 6px; font-weight: 600; fill: currentColor;
+    paint-order: stroke; stroke: var(--paper); stroke-width: 1.7px; stroke-linejoin: round; }
+  .topo-bg .peaks .mk { fill: currentColor; }
+  .topo-bg .peaks .ldr { stroke: currentColor; stroke-width: .5px; opacity: .5; }
 
   /* ---------- hero (full screen, top-left) ---------- */
   header.hero {
@@ -659,7 +664,20 @@
     <path d="M459.3,611.0L458.9,610.5L457.0,608.9L457.0,608.9L455.0,607.9L453.1,607.0L452.9,606.9L451.1,606.1L449.2,605.2L447.5,604.8L447.2,604.8L446.9,604.8L445.3,605.4L444.3,606.9L443.7,608.9L443.4,611.0"/>
     <path d="M580.0,83.9L578.9,82.3L578.0,81.4L577.3,80.2L576.1,78.3L576.0,78.2L574.7,76.1L574.1,75.3L573.0,74.1L572.2,73.2L570.6,72.0L570.2,71.6L568.5,69.9L568.6,67.9L570.2,65.8L570.2,65.8L571.2,63.8L571.6,61.7L570.8,59.7L570.2,59.1L568.3,58.5L566.3,59.0L565.5,59.7L564.4,61.3L564.2,61.7L563.8,63.8L563.9,65.8L564.2,67.9L562.4,69.5L560.5,69.8L558.9,69.9L558.5,70.0L556.6,70.3L554.6,70.9L552.7,71.7L552.1,72.0L550.7,72.7L548.8,73.7L548.0,74.1L546.8,74.8L544.8,76.1L544.8,76.1L543.1,78.2L542.9,78.6L542.2,80.2L541.8,82.3L542.0,84.3L542.9,85.9L543.6,86.4L544.8,86.8L546.8,86.8L548.8,86.6L550.7,86.5L552.7,86.7L554.6,87.2L556.6,87.7L558.5,88.4L558.7,88.5L560.5,89.0L562.4,89.6L564.4,90.1L566.3,90.4L567.0,90.5L568.3,90.7L570.2,90.9L572.2,90.9L574.1,90.7L574.6,90.5L576.1,89.9L578.0,88.8L578.6,88.5L580.0,87.1"/>
   </g>
-</g></svg></div>
+</g></svg><svg class="peaks" viewBox="0 0 580 611" preserveAspectRatio="xMidYMid slice">
+  <line class="ldr" x1="435" y1="304" x2="446" y2="287"/>
+  <line class="ldr" x1="428" y1="307" x2="419" y2="330"/>
+  <line class="ldr" x1="473" y1="306" x2="484" y2="310"/>
+  <line class="ldr" x1="392" y1="295" x2="383" y2="287"/>
+  <path class="mk" d="M435,302 L437.4,307 L432.6,307 Z"/>
+  <path class="mk" d="M428,303 L430.4,308 L425.6,308 Z"/>
+  <path class="mk" d="M473,303 L475.4,308 L470.6,308 Z"/>
+  <path class="mk" d="M392,293 L394.4,298 L389.6,298 Z"/>
+  <text x="448" y="287" text-anchor="start">Taka-dake · 1,592 m</text>
+  <text x="418" y="333" text-anchor="end">Naka-dake · 1,506 m</text>
+  <text x="486" y="312" text-anchor="start">Neko-dake · 1,433 m</text>
+  <text x="381" y="286" text-anchor="end">Kishima-dake · 1,326 m</text>
+</svg></div>
 
 <header class="hero" id="home">
   <div class="hero-inner">
