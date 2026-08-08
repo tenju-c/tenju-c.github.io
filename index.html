@@ -53,21 +53,25 @@
     nav.top .links a { padding: 7px 8px; font-size: 13px; }
   }
 
-  /* ---------- hero (full screen) ---------- */
+  /* ---------- fixed topo background (stays put on scroll) ---------- */
+  .topo-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .topo-bg .contours { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent-2); opacity: .45; }
+
+  /* ---------- hero (full screen, top-left) ---------- */
   header.hero {
-    position: relative; overflow: hidden; background: var(--card);
+    position: relative; z-index: 1; overflow: hidden; background: transparent;
     min-height: calc(100vh - var(--nav-h));
-    display: flex; align-items: center;
+    display: flex; align-items: flex-start;
     border-bottom: 3px solid var(--accent-2);
   }
-  .hero .contours { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent-2); opacity: .45; pointer-events: none; z-index: 0; }
   .hero::after { content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-    background: linear-gradient(100deg, var(--card) 0%, var(--card) 8%, transparent 54%),
-                linear-gradient(0deg, var(--card) 0%, var(--card) 3%, transparent 26%); opacity:.8; }
-  .hero-inner { position: relative; z-index: 1; width: 100%; padding: 40px 0; }
-  h1 { font-size: clamp(40px, 8vw, 68px); font-weight: 700; margin: 0; letter-spacing: .01em; line-height: 1.02; }
-  .role { font-size: clamp(15px, 2.4vw, 20px); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 10px 0 0; }
-  .tagline { max-width: 640px; font-size: clamp(16px, 2.2vw, 18px); margin: 20px 0 0; color: var(--ink); font-weight: 600; }
+    background: linear-gradient(100deg, var(--card) 0%, var(--card) 10%, transparent 60%),
+                linear-gradient(0deg, var(--card) 0%, var(--card) 4%, transparent 28%); opacity:.78; }
+  .hero-inner { position: relative; z-index: 1; width: 100%; max-width: 1200px; padding: clamp(30px,7vh,84px) clamp(24px,5vw,72px); }
+  h1 { font-size: clamp(52px, 11vw, 116px); font-weight: 700; margin: 0; letter-spacing: .005em; line-height: 1.0; }
+  .role { font-size: clamp(17px, 3.2vw, 30px); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 14px 0 0; }
+  .tagline { max-width: 780px; font-size: clamp(18px, 2.5vw, 26px); margin: 28px 0 0; color: var(--ink); font-weight: 600; }
+  .hero .btn { font-size: 15px; padding: 11px 20px; }
   .cta { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
   .btn { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; text-decoration: none;
     padding: 9px 16px; border-radius: 6px; border: 1.5px solid var(--accent); color: var(--accent); background: transparent; transition: .15s; }
@@ -79,6 +83,7 @@
   @keyframes bob { 0%,100%{ transform: translate(-50%, 0);} 50%{ transform: translate(-50%, 6px);} }
 
   /* ---------- sections ---------- */
+  main { position: relative; z-index: 1; background: var(--paper); }
   section { padding: 68px 0; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--nav-h) + 8px); }
   h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0 0 24px; }
   .about p { font-size: 17px; max-width: 720px; margin: 0 0 14px; }
@@ -110,7 +115,7 @@
   /* ---------- contact ---------- */
   #contact p.lead { font-size: 17px; max-width: 640px; margin: 0 0 22px; }
   .contact-cta { display: flex; flex-wrap: wrap; gap: 10px; }
-  footer { border-top: 1px solid var(--line); padding: 28px 0 44px; text-align: center; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 44px; text-align: center; position: relative; z-index: 1; background: var(--paper); }
   footer .copy { font-size: 12.5px; color: var(--faint); }
 
   @media (max-width: 640px) { .projects { grid-template-columns: 1fr; } }
@@ -130,8 +135,7 @@
   </div>
 </nav>
 
-<header class="hero" id="home">
-  <svg class="contours" viewBox="0 0 580 611" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round">
+<div class="topo-bg" aria-hidden="true"><svg class="contours" viewBox="0 0 580 611" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round">
   <g stroke-width="0.38" stroke-opacity="0.8">
     <path d="M35.2,120.9L34.6,121.4L33.9,123.4L34.0,125.5L34.3,127.5L34.5,129.6L34.6,131.7L34.6,133.7L34.3,135.8L33.8,137.8L33.2,139.2L32.9,139.9L31.4,141.9L31.2,142.1L29.3,144.0L29.3,144.0L27.7,146.1L27.3,147.2L27.1,148.1L27.1,150.2L27.3,151.5L27.5,152.2L28.8,154.3L29.3,154.7L31.2,155.7L32.5,156.4L33.2,156.7L35.2,158.1L35.5,158.4L36.6,160.5L36.5,162.5L36.0,164.6L36.0,166.6L36.6,168.7L37.1,169.8L37.5,170.8L37.9,172.8L37.8,174.9L37.4,176.9L37.1,178.8L37.1,179.0L37.1,179.1L37.6,181.0L39.1,182.8L39.4,183.1L41.0,184.1L42.8,185.2L43.0,185.2L44.9,186.3L46.3,187.2L46.9,187.6L48.8,189.2L48.8,189.3L50.4,191.3L50.8,192.0L51.6,193.4L52.7,195.4L52.7,195.4L54.7,197.5L54.7,197.5L56.6,198.6L58.3,199.6L58.6,199.7L60.5,200.9L61.4,201.6L62.5,202.7L63.4,203.7L64.4,204.9L65.3,205.7L66.4,206.9L67.4,207.8L68.4,208.9L69.1,209.8L70.3,211.7L70.4,211.9L71.6,214.0L72.3,215.0L72.8,216.0L73.9,218.1L74.2,218.7L74.9,220.1L75.7,222.2L76.2,223.5L76.5,224.2L77.5,226.3L78.1,227.5L78.8,228.4L80.1,230.0L82.0,230.3L84.0,229.0L84.5,228.4L85.9,226.3L85.9,226.2L86.5,224.2L87.3,222.2L87.9,221.4L89.4,220.1L89.8,219.8L91.8,219.2L93.7,219.1L95.7,219.2L97.6,219.5L99.6,220.0L100.1,220.1L101.5,220.5L103.5,221.2L105.5,222.0L106.0,222.2L107.4,222.5L109.4,222.9L111.3,223.0L113.3,223.0L115.2,222.9L117.2,222.7L119.1,222.6L121.1,222.5L123.0,222.6L125.0,222.9L126.9,223.5L128.5,224.2L128.9,224.4L130.8,225.0L132.8,225.2L134.7,224.9L136.7,224.3L136.9,224.2L138.7,222.8L139.5,222.2L140.1,220.1L139.2,218.1L138.7,217.4L137.6,216.0L136.7,215.0L136.0,214.0L134.8,211.9L134.7,211.8L133.6,209.8L132.8,208.3L132.5,207.8L131.5,205.7L130.8,204.6L130.3,203.7L128.9,201.6L128.9,201.6L126.9,200.0L126.3,199.6L125.0,199.0L123.0,198.5L121.1,198.2L119.1,198.0L117.2,197.5L117.1,197.5L115.2,196.8L113.6,195.4L113.3,195.1L112.0,193.4L111.3,191.4L111.3,191.3L111.3,189.3L111.3,189.1L111.8,187.2L112.5,185.2L112.7,183.1L112.0,181.0L111.3,179.9L110.4,179.0L109.4,178.0L107.4,176.9L107.4,176.9L105.5,176.7L103.5,176.9L103.4,176.9L101.5,177.5L99.6,177.9L97.6,178.1L95.7,178.0L93.7,177.8L91.8,177.6L89.8,177.4L87.9,177.3L85.9,177.1L85.0,176.9L84.0,176.7L82.0,176.2L80.1,175.8L78.1,175.7L76.2,175.8L74.2,175.6L72.3,174.9L72.1,174.9L70.3,173.2L69.8,172.8L68.4,172.0L66.4,171.5L64.4,171.2L62.5,170.8L62.4,170.8L60.5,170.2L58.6,169.5L57.5,168.7L56.6,167.9L55.7,166.6L55.0,164.6L54.9,162.5L55.7,160.5L56.6,159.5L58.5,158.4L58.6,158.3L60.5,157.7L62.5,157.0L63.5,156.4L64.4,154.7L64.6,154.3L66.0,152.2L66.4,151.8L68.4,150.3L68.5,150.2L69.6,148.1L69.0,146.1L68.4,145.3L66.4,144.4L64.4,145.2L63.3,146.1L62.5,146.7L60.5,147.5L58.6,147.9L56.7,148.1L56.6,148.1L54.7,148.3L52.7,148.6L50.8,148.8L48.8,148.8L46.9,148.3L46.6,148.1L44.9,146.9L44.3,146.1L43.1,144.0L43.0,143.7L42.3,141.9L41.9,139.9L41.5,137.8L41.2,135.8L41.0,134.8L40.7,133.7L40.3,131.7L40.3,129.6L40.8,127.5L41.0,127.2L41.7,125.5L42.7,123.4L43.0,122.1L43.1,121.4L43.0,121.1L41.0,119.6L39.1,119.5L37.1,120.0L35.2,120.9"/>
     <path d="M0.0,168.7L0.6,168.7L1.9,166.6L0.6,164.6L0.0,163.9"/>
@@ -655,8 +659,10 @@
     <path d="M459.3,611.0L458.9,610.5L457.0,608.9L457.0,608.9L455.0,607.9L453.1,607.0L452.9,606.9L451.1,606.1L449.2,605.2L447.5,604.8L447.2,604.8L446.9,604.8L445.3,605.4L444.3,606.9L443.7,608.9L443.4,611.0"/>
     <path d="M580.0,83.9L578.9,82.3L578.0,81.4L577.3,80.2L576.1,78.3L576.0,78.2L574.7,76.1L574.1,75.3L573.0,74.1L572.2,73.2L570.6,72.0L570.2,71.6L568.5,69.9L568.6,67.9L570.2,65.8L570.2,65.8L571.2,63.8L571.6,61.7L570.8,59.7L570.2,59.1L568.3,58.5L566.3,59.0L565.5,59.7L564.4,61.3L564.2,61.7L563.8,63.8L563.9,65.8L564.2,67.9L562.4,69.5L560.5,69.8L558.9,69.9L558.5,70.0L556.6,70.3L554.6,70.9L552.7,71.7L552.1,72.0L550.7,72.7L548.8,73.7L548.0,74.1L546.8,74.8L544.8,76.1L544.8,76.1L543.1,78.2L542.9,78.6L542.2,80.2L541.8,82.3L542.0,84.3L542.9,85.9L543.6,86.4L544.8,86.8L546.8,86.8L548.8,86.6L550.7,86.5L552.7,86.7L554.6,87.2L556.6,87.7L558.5,88.4L558.7,88.5L560.5,89.0L562.4,89.6L564.4,90.1L566.3,90.4L567.0,90.5L568.3,90.7L570.2,90.9L572.2,90.9L574.1,90.7L574.6,90.5L576.1,89.9L578.0,88.8L578.6,88.5L580.0,87.1"/>
   </g>
-</g></svg>
-  <div class="wrap hero-inner">
+</g></svg></div>
+
+<header class="hero" id="home">
+  <div class="hero-inner">
     <h1>Tenju Cuddihy</h1>
     <p class="role">Geospatial Data Scientist</p>
     <p class="tagline">I build production data pipelines and spatial analyses for ecological and environmental research, turning large, multi-source geospatial datasets into decision-ready results.</p>
