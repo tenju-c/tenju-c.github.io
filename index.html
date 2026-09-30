@@ -120,7 +120,28 @@
 
   .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 22px 20px; display: flex; flex-direction: column; }
-  .card .thumb { width: 100%; height: 190px; object-fit: cover; object-position: center; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); margin: 0 0 16px; display: block; }
+  .card .thumb-wrap { position: relative; display: block; margin: 0 0 16px; }
+  .card .thumb { width: 100%; height: 190px; object-fit: cover; object-position: center; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); display: block; }
+  .card .thumb-wrap::after { content: ""; position: absolute; inset: 0; border-radius: 8px; pointer-events: none;
+    background: linear-gradient(0deg, rgba(0,0,0,.30), transparent 48%); opacity: 0; transition: opacity .16s; }
+  .card .thumb-wrap:hover::after, .card .thumb-wrap:focus-within::after { opacity: 1; }
+  .expand-btn { position: absolute; bottom: 10px; right: 10px; display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--sans); font-size: 12.5px; font-weight: 600; color: #fff; cursor: pointer;
+    background: rgba(20,29,26,.82); border: 1px solid rgba(255,255,255,.28); padding: 7px 12px; border-radius: 6px;
+    opacity: 0; transform: translateY(4px); transition: opacity .16s, transform .16s, background .16s, border-color .16s; }
+  .thumb-wrap:hover .expand-btn, .thumb-wrap:focus-within .expand-btn { opacity: 1; transform: translateY(0); }
+  .expand-btn:hover { background: rgba(20,29,26,.96); border-color: rgba(255,255,255,.55); }
+  .expand-btn svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+  @media (hover: none) { .expand-btn { opacity: 1; transform: none; } }
+  .lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+    background: rgba(8,11,10,.92); padding: clamp(16px,4vw,48px); cursor: zoom-out; }
+  .lightbox[hidden] { display: none !important; }
+  .lightbox-img { max-width: 94vw; max-height: 90vh; width: auto; height: auto; object-fit: contain;
+    border-radius: 6px; box-shadow: 0 12px 44px rgba(0,0,0,.55); background: #fff; cursor: default; }
+  .lightbox-close { position: absolute; top: clamp(10px,2.5vw,24px); right: clamp(10px,2.5vw,24px);
+    width: 42px; height: 42px; border-radius: 8px; cursor: pointer; color: #fff; font-size: 24px; line-height: 1;
+    background: rgba(20,29,26,.85); border: 1px solid rgba(255,255,255,.3); }
+  .lightbox-close:hover { background: rgba(20,29,26,.98); border-color: rgba(255,255,255,.55); }
   .card h3 { font-size: 20px; margin: 0 0 5px; color: var(--ink); }
   .card .yr { font-size: 13px; color: var(--faint); font-variant-numeric: tabular-nums; margin: 0 0 11px; }
   .card p { font-size: 15.5px; line-height: 1.65; margin: 0 0 16px; color: var(--muted); }
@@ -2759,7 +2780,10 @@
     <h2>Selected Projects</h2>
     <div class="projects">
       <div class="card">
-        <img class="thumb" style="object-position: top;" src="images/regeneration-forest-types.png" alt="Lollipop chart binning forest type names into forest type groups by plot count, on a log scale" loading="lazy">
+        <div class="thumb-wrap">
+          <img class="thumb" style="object-position: top;" src="images/regeneration-forest-types.png" alt="Lollipop chart binning forest type names into forest type groups by plot count, on a log scale" loading="lazy">
+          <button class="expand-btn" type="button" data-full="images/regeneration-forest-types-full.png" data-alt="Full reference figure: forest type names binned into forest type groups by plot count, on a log scale"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>Expand image</button>
+        </div>
         <h3>Northeastern Forest Regeneration</h3>
         <p class="yr">FEMC · Forthcoming 2026 · First author</p>
         <p>A regional analysis of 10,632 forest monitoring plots (2015–2024) comparing what's growing in the understory against the current canopy. I used compositional methods (Bray-Curtis dissimilarity, Shannon diversity) to flag the forest types where the next generation of trees diverges most from the one above it, an early signal of how these forests may change. Built on R pipelines that combine FIA, FHM, and NEFIN inventory data into a single dataset for analysis.</p>
@@ -2767,7 +2791,10 @@
         <div class="plinks"><span class="muted-link">Report forthcoming this year</span></div>
       </div>
       <div class="card">
-        <img class="thumb" src="images/distance-infrastructure-nyc.jpg" alt="Distance-to-infrastructure raster over the New York City area; warmer colors mark locations farther from infrastructure" loading="lazy">
+        <div class="thumb-wrap">
+          <img class="thumb" src="images/distance-infrastructure-nyc.jpg" alt="Distance-to-infrastructure raster over the New York City area; warmer colors mark locations farther from infrastructure" loading="lazy">
+          <button class="expand-btn" type="button" data-full="images/distance-infrastructure-nyc-full.jpg" data-alt="Full distance-to-infrastructure raster over the New York City area; warmer colors mark locations farther from infrastructure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>Expand image</button>
+        </div>
         <h3>Distance-to-Infrastructure Rasters</h3>
         <p class="yr">FEMC · Summer 2026</p>
         <p>An automated Python pipeline that generates annual 10 m distance rasters across the Northeastern U.S. (2016–2025) to feed a forest-disturbance model. It produces yearly distance-to-feature layers for roads, rail, airport runways and aprons, buildings, power transmission lines, and water, plus two composite layers: an "infrastructure" layer that combines roads, rail, and airports, and a second that combines that infrastructure layer with buildings. The pipeline automatically pulls its inputs from TIGER/Line, OpenStreetMap (ohsome), Microsoft Building Footprints, and HIFLD transmission data.</p>
@@ -2817,11 +2844,50 @@
   </section>
 </main>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image" hidden>
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close expanded image">&times;</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
+
 <footer>
   <div class="wrap"><p class="copy">© 2026 Tenju Cuddihy · Brooklyn, NY · Open to remote</p></div>
 </footer>
 
 <script>
+  // Expand project images into a full-size lightbox
+  (function () {
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightboxImg');
+    var lbClose = document.getElementById('lightboxClose');
+    if (!lb || !lbImg) return;
+    var lastFocus = null;
+    function open(src, alt) {
+      lastFocus = document.activeElement;
+      lbImg.setAttribute('src', src);
+      lbImg.setAttribute('alt', alt || '');
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+    function close() {
+      lb.hidden = true;
+      lbImg.setAttribute('src', '');
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.expand-btn'), function (btn) {
+      btn.addEventListener('click', function () {
+        open(btn.getAttribute('data-full'), btn.getAttribute('data-alt'));
+      });
+    });
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb || e.target === lbClose) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if ((e.key === 'Escape' || e.key === 'Esc') && !lb.hidden) close();
+    });
+  })();
+
   // Highlight the nav link for the section currently in view
   (function () {
     var links = Array.prototype.slice.call(document.querySelectorAll('nav.top .links a[href^="#"]'));
