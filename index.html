@@ -120,10 +120,11 @@
 
   .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 22px 20px; display: flex; flex-direction: column; }
+  .card .thumb { width: 100%; height: 190px; object-fit: cover; object-position: center; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); margin: 0 0 16px; display: block; }
   .card h3 { font-size: 20px; margin: 0 0 5px; color: var(--ink); }
   .card .yr { font-size: 13px; color: var(--faint); font-variant-numeric: tabular-nums; margin: 0 0 11px; }
-  .card p { font-size: 15.5px; line-height: 1.65; margin: 0 0 16px; color: var(--muted); flex: 1; }
-  .ptags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 14px; }
+  .card p { font-size: 15.5px; line-height: 1.65; margin: 0 0 16px; color: var(--muted); }
+  .ptags { display: flex; flex-wrap: wrap; gap: 5px; margin: auto 0 14px; }
   .ptag { font-size: 11px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 3px; color: var(--ink); background: var(--paper); }
   .plinks { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13.5px; font-weight: 600; }
   .plinks a { text-decoration: none; }
@@ -2732,7 +2733,7 @@
   <div class="hero-inner">
     <h1>Tenju Cuddihy</h1>
     <p class="role">Geospatial Data Scientist</p>
-    <p class="tagline">I build production data pipelines and spatial analyses for ecological and environmental research, turning large, multi-source geospatial datasets into decision-ready results.</p>
+    <p class="tagline">I build the data pipelines and spatial analyses behind ecological and environmental research, turning large, messy, multi-source datasets into results people can act on.</p>
     <div class="cta">
       <a class="btn solid" href="#projects">View projects</a>
       <a class="btn" href="./TenjuCuddihy_Resume_2026.pdf">Download résumé (PDF)</a>
@@ -2749,38 +2750,41 @@
 <main>
   <section class="about wrap" id="about">
     <h2>About</h2>
-    <p>Geospatial data scientist working with large, multi-source forest and environmental datasets. First author of a forthcoming FEMC regional report comparing regeneration and overstory composition across more than 10,000 monitoring plots in the Northeastern U.S., built on R pipelines I wrote to standardize and analyze the underlying inventory data.</p>
-    <p>I also build automated Python geoprocessing workflows, and since 2023 have worked remotely and largely independently, turning inventory and remote-sensing records into analysis-ready results for foresters, land managers, and researchers.</p>
+    <p>I'm a geospatial data scientist who works with large, multi-source forest and environmental datasets. I'm the first author of a forthcoming FEMC regional report comparing forest regeneration against overstory composition across more than 10,000 monitoring plots in the Northeastern U.S. The analysis runs on R pipelines I wrote to standardize and analyze the underlying inventory data.</p>
+    <p>I also build automated Python geoprocessing workflows, and since 2023 I've worked remotely and largely on my own, turning inventory and remote-sensing records into analysis-ready results for foresters, land managers, government, and researchers.</p>
+    <p>I also spent 2023 to 2025 as a geospatial technician at UVM's Spatial Analysis Laboratory (SAL), classifying and quality-reviewing high-resolution land cover across mapping projects in more than 15 U.S. states and Canada. In this role I logged roughly 2,760 hours in ArcGIS Pro and learned to handle large remote-sensing datasets at production scale while holding them to a consistent standard of accuracy.</p>
   </section>
 
   <section class="wrap" id="projects">
     <h2>Selected Projects</h2>
     <div class="projects">
       <div class="card">
+        <img class="thumb" style="object-position: top;" src="images/regeneration-forest-types.png" alt="Lollipop chart binning forest type names into forest type groups by plot count, on a log scale" loading="lazy">
         <h3>Northeastern Forest Regeneration</h3>
         <p class="yr">FEMC · Forthcoming 2026 · First author</p>
-        <p>A regional analysis comparing overstory and regeneration composition across 10,632 forest monitoring plots (2015–2024), using compositional methods (Bray-Curtis dissimilarity, Shannon diversity) to flag the forest types where sapling and seedling layers diverge most from the current canopy. Built on R pipelines that harmonize FIA, FHM, and NEFIN inventory data into a single analysis-ready dataset.</p>
+        <p>A regional analysis of 10,632 forest monitoring plots (2015–2024) comparing what's growing in the understory against the current canopy. I used compositional methods (Bray-Curtis dissimilarity, Shannon diversity) to flag the forest types where the next generation of trees diverges most from the one above it, an early signal of how these forests may change. Built on R pipelines that combine FIA, FHM, and NEFIN inventory data into a single dataset for analysis.</p>
         <div class="ptags"><span class="ptag">R</span><span class="ptag">spatial statistics</span><span class="ptag">FIA / FHM / NEFIN</span><span class="ptag">data harmonization</span></div>
         <div class="plinks"><span class="muted-link">Report forthcoming this year</span></div>
       </div>
       <div class="card">
+        <img class="thumb" src="images/distance-infrastructure-nyc.jpg" alt="Distance-to-infrastructure raster over the New York City area; warmer colors mark locations farther from infrastructure" loading="lazy">
         <h3>Distance-to-Infrastructure Rasters</h3>
-        <p class="yr">FEMC · 2024–present</p>
-        <p>An automated Python pipeline generating 30 annual 10 m distance-to-infrastructure rasters (roads, buildings, and combined infrastructure, 2016–2025) for the Northeastern U.S. as inputs to a forest-disturbance model. Retrieves TIGER/Line and OpenStreetMap (ohsome) data automatically and validates against Microsoft Building Footprints.</p>
+        <p class="yr">FEMC · Summer 2026</p>
+        <p>An automated Python pipeline that generates annual 10 m distance rasters across the Northeastern U.S. (2016–2025) to feed a forest-disturbance model. It produces yearly distance-to-feature layers for roads, rail, airport runways and aprons, buildings, power transmission lines, and water, plus two composite layers: an "infrastructure" layer that combines roads, rail, and airports, and a second that combines that infrastructure layer with buildings. The pipeline automatically pulls its inputs from TIGER/Line, OpenStreetMap (ohsome), Microsoft Building Footprints, and HIFLD transmission data.</p>
         <div class="ptags"><span class="ptag">Python</span><span class="ptag">geopandas</span><span class="ptag">rasterio</span><span class="ptag">GDAL</span><span class="ptag">SciPy</span></div>
         <div class="plinks"><span class="muted-link">FEMC internal project</span></div>
       </div>
       <div class="card">
         <h3>High-Resolution Land Cover &amp; Tree Canopy</h3>
         <p class="yr">UVM Spatial Analysis Lab · 2023–2025</p>
-        <p>Classification and multi-pass quality review of high-resolution land cover — tree canopy, impervious surface, buildings, and road networks — across 18 mapping projects in 15+ US states and Canada (~2,760 hours in ArcGIS Pro). Programs included the Chesapeake Bay Watershed, EPA Area 3, Texas statewide, the California Central Coast, and New York City, with LiDAR point-cloud processing in QTM.</p>
+        <p>Classified and quality-reviewed high-resolution land cover data (tree canopy, impervious surface, buildings, and road networks) across 18 mapping projects in 15+ U.S. states and Canada, logging roughly 2,760 hours in ArcGIS Pro. Work spanned the Chesapeake Bay Watershed, EPA Area 3, statewide Texas, the California Central Coast, and New York City. Also worked with LiDAR point-cloud processing in Quick Terrain Modeler (QTM).</p>
         <div class="ptags"><span class="ptag">ArcGIS Pro</span><span class="ptag">LiDAR (QTM)</span><span class="ptag">land cover</span><span class="ptag">remote sensing</span></div>
         <div class="plinks"><span class="muted-link">Client / lab deliverables</span></div>
       </div>
       <div class="card">
         <h3>Dissolved Oxygen &amp; Phosphorus Cycling</h3>
         <p class="yr">UVM Honors Thesis · 2023</p>
-        <p>Undergraduate honors thesis on dissolved-oxygen dynamics and their implications for phosphorus cycling in restored wetlands of the Lake Champlain Basin, combining lab methods (TSS/TVS, loss-on-ignition) with field-deployed YSI multiparameter sensors, analyzed and visualized in R.</p>
+        <p>Honors thesis on how dissolved-oxygen dynamics shape phosphorus cycling in restored wetlands of the Lake Champlain Basin. I paired lab work (TSS/TVS, loss-on-ignition) with field-deployed YSI multiparameter sensors, then analyzed and visualized the data in R.</p>
         <div class="ptags"><span class="ptag">R</span><span class="ptag">field &amp; lab methods</span><span class="ptag">water quality</span></div>
         <div class="plinks">
           <a href="https://scholarworks.uvm.edu/items/a0b1ec19-4f01-4c55-b5a5-ac815bf84383" target="_blank" rel="noopener">Read thesis →</a>
